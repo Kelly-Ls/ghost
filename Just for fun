@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halloween Ghost & Snacks</title>
+    <style>
+        /* 基础重置与氛围 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #1e1a1f 0%, #2f2a2e 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Creepster', cursive, sans-serif;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 捣蛋的飘浮幽灵背景 */
+        .ghost-float {
+            position: absolute;
+            top: 5%;
+            left: 3%;
+            font-size: 4rem;
+            opacity: 0.3;
+            animation: drift 8s infinite alternate ease-in-out;
+            filter: blur(1px);
+            transform: rotate(-15deg);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .ghost-float2 {
+            top: 15%;
+            right: 3%;
+            left: auto;
+            font-size: 5rem;
+            opacity: 0.2;
+            animation: drift 11s infinite alternate-reverse;
+            transform: rotate(20deg);
+        }
+
+        @keyframes drift {
+            0% { transform: translate(0, 0) rotate(-15deg); }
+            100% { transform: translate(40px, 30px) rotate(-5deg); }
+        }
+
+        /* 主卡片 */
+        .messy-card {
+            max-width: 1200px; /* 稍微加宽以容纳新角色 */
+            width: 100%;
+            background: rgba(20, 16, 22, 0.85);
+            backdrop-filter: blur(4px);
+            border: 3px dashed #c96f1f;
+            border-radius: 70px 70px 40px 40px;
+            padding: 30px 25px 40px;
+            box-shadow: 0 0 40px rgba(255, 140, 0, 0.4), inset 0 0 30px rgba(0, 0, 0, 0.7);
+            position: relative;
+            z-index: 10;
+        }
+
+        /* 标题 */
+        .title {
+            text-align: center;
+            font-size: 4rem;
+            font-weight: 900;
+            letter-spacing: 6px;
+            color: #ffa947;
+            text-shadow: 0 0 15px #ff6a00, 0 0 30px #b23e00, 4px 4px 0 #3a1f0c;
+            transform: rotate(-2deg);
+            margin-top: -15px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 8px 6px black);
+        }
+
+        /* 场景布局：左边是原版幽灵和食物，右边是敲门鬼 */
+        .scene {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: center;
+            gap: 30px;
+            position: relative;
+        }
+
+        .left-scene {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px 40px;
+        }
+
+        /* ========= 左侧：摇摆的幽灵及食物 ========= */
+        .dizzy-character {
+            position: relative;
+            width: 260px;
+            height: 280px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            filter: drop-shadow(0 15px 10px rgba(0, 0, 0, 0.7));
+            animation: sway 4s infinite alternate ease-in-out;
+            transform-origin: bottom center;
+            flex-shrink: 0;
+        }
+
+        @keyframes sway {
+            0% { transform: rotate(-8deg) translateY(0); }
+            50% { transform: rotate(0deg) translateY(-8px); }
+            100% { transform: rotate(8deg) translateY(0); }
+        }
+
+        .ghost-body {
+            position: relative;
+            width: 190px;
+            height: 220px;
+            background: radial-gradient(circle at 30% 20%, #f0f0ff, #b6b6d9);
+            border-radius: 50% 50% 40% 40% / 60% 60% 30% 30%;
+            box-shadow: 0 0 30px #b0b0ff, inset -10px -15px 20px #6d6d8b;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding-top: 45px;
+            border: 2px solid #cacaff;
+        }
+
+        .eyes {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 10px;
+        }
+
+        .eye {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 5px black, inset 0 0 10px #222;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pupil {
+            width: 18px;
+            height: 18px;
+            background: #0d0d0d;
+            border-radius: 50%;
+            position: relative;
+            left: 5px;
+            animation: rollEye 2s infinite alternate;
+        }
+
+        @keyframes rollEye {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(8px, -5px); }
+            50% { transform: translate(12px, 6px); }
+            75% { transform: translate(-5px, 8px); }
+            100% { transform: translate(0, 0); }
+        }
+
+        .dizzy-spiral {
+            position: absolute;
+            top: 10px;
+            right: -10px;
+            font-size: 3rem;
+            animation: spin 2s infinite linear;
+            opacity: 0.8;
+            color: #ffbb33;
+            text-shadow: 0 0 10px orange;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.3); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        .mouth {
+            width: 50px;
+            height: 22px;
+            background: #2e1a1a;
+            border-radius: 0 0 50px 50px;
+            margin-top: 10px;
+            transform: rotate(-10deg) skewX(5deg);
+            box-shadow: inset 0 -5px 5px #0a0a0a;
+        }
+
+        .ghost-tail {
+            width: 130px;
+            height: 45px;
+            background: radial-gradient(ellipse at top, #b6b6d9, #8a8ab0);
+            border-radius: 0 0 70% 70% / 0 0 100% 100%;
+            margin-top: -20px;
+            filter: blur(2px);
+            opacity: 0.9;
+        }
+
+        /* 啤酒 */
+        .beer-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transform: rotate(8deg);
+            filter: drop-shadow(0 10px 5px #00000080);
+            animation: wobble 3s infinite alternate;
+            flex-shrink: 0;
+        }
+
+        @keyframes wobble {
+            0% { transform: rotate(5deg) translateY(0); }
+            100% { transform: rotate(12deg) translateY(-10px); }
+        }
+
+        .beer-glass {
+            width: 70px;
+            height: 100px;
+            background: linear-gradient(135deg, #f7c35c, #d18f2c);
+            border-radius: 8px 8px 20px 20px;
+            border: 3px solid #a5671a;
+            position: relative;
+            box-shadow: inset 0 -10px 15px #b46f1e, 0 0 15px #ffb347;
+            margin-bottom: 5px;
+        }
+
+        .beer-foam {
+            position: absolute;
+            top: -12px;
+            left: 5px;
+            width: 60px;
+            height: 25px;
+            background: #fef9e3;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #fff8d0;
+        }
+
+        .beer-bottle {
+            width: 35px;
+            height: 90px;
+            background: #52381e;
+            border-radius: 20% 20% 10% 10% / 30% 30% 10% 10%;
+            border: 2px solid #2b1b0b;
+            position: relative;
+            margin-top: -10px;
+            transform: rotate(-15deg);
+        }
+        .beer-bottle::before {
+            content: "";
+            position: absolute;
+            top: -15px;
+            left: 6px;
+            width: 21px;
+            height: 20px;
+            background: #916e3a;
+            border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+            border-bottom: 2px solid #5a3d1c;
+        }
+
+        /* 薯条 */
+        .fries-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transform: rotate(-12deg);
+            filter: drop-shadow(0 12px 8px black);
+            animation: tiltFries 4s infinite alternate;
+            flex-shrink: 0;
+        }
+
+        @keyframes tiltFries {
+            0% { transform: rotate(-15deg) translateX(0); }
+            100% { transform: rotate(-5deg) translateX(10px); }
+        }
+
+        .fries-box {
+            width: 90px;
+            height: 80px;
+            background: #d62f2f;
+            border-radius: 10px 10px 20px 20px;
+            border: 4px solid #9e1a1a;
+            position: relative;
+            box-shadow: inset 0 0 20px #7a1010, 0 0 20px #ff000080;
+        }
+
+        .fries-box::before {
+            content: "🍟";
+            position: absolute;
+            top: -35px;
+            left: -10px;
+            font-size: 4.5rem;
+            transform: rotate(10deg);
+            filter: drop-shadow(2px 8px 5px black);
+        }
+
+        /* 失败的炸鱼 */
+        .fish-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transform: rotate(20deg);
+            filter: drop-shadow(0 12px 10px #000000aa);
+            animation: fishFlop 5s infinite alternate;
+            flex-shrink: 0;
+        }
+
+        @keyframes fishFlop {
+            0% { transform: rotate(15deg) translateY(0); }
+            100% { transform: rotate(25deg) translateY(-15px); }
+        }
+
+        .failed-fish {
+            font-size: 5rem;
+            line-height: 1;
+            text-shadow: 6px 6px 0 #1a1a1a, 0 0 20px #7c5b2e;
+            transform: scaleX(-1);
+            filter: grayscale(40%) sepia(40%) brightness(0.8);
+            position: relative;
+        }
+
+        .failed-fish::after {
+            content: "💢";
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 2.5rem;
+            filter: drop-shadow(0 0 5px red);
+            animation: anger 0.7s infinite alternate;
+        }
+
+        @keyframes anger {
+            0% { transform: scale(1) rotate(0deg); }
+            100% { transform: scale(1.3) rotate(15deg); }
+        }
+
+        /* ========= 右侧：敲门的鬼 ========= */
+        .knocking-scene {
+            position: relative;
+            width: 280px;
+            height: 320px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        /* 门 */
+        .door {
+            width: 140px;
+            height: 240px;
+            background: #5c3a21;
+            border: 8px solid #3b2414;
+            border-radius: 10px 10px 0 0;
+            position: absolute;
+            right: 20px;
+            bottom: 0;
+            box-shadow: inset 0 0 30px #1a0f07, 0 0 20px black;
+        }
+
+        .door-knob {
+            width: 15px;
+            height: 15px;
+            background: #d4af37;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            box-shadow: 0 0 10px #d4af37, inset -2px -2px 5px #7a5c1c;
+        }
+
+        /* 敲门声特效 */
+        .knock-effect {
+            position: absolute;
+            top: 40%;
+            left: 10px;
+            font-size: 1.2rem;
+            color: #ffc107;
+            font-weight: bold;
+            font-family: 'Comic Sans MS', cursive;
+            text-shadow: 0 0 5px orange, 1px 1px 2px black;
+            animation: knockText 0.4s infinite alternate;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        @keyframes knockText {
+            0% { transform: scale(0.9) rotate(-5deg); opacity: 0.5; }
+            100% { transform: scale(1.1) rotate(5deg); opacity: 1; }
+        }
+
+        /* 摇晃敲门的小幽灵 */
+        .knocking-ghost {
+            position: absolute;
+            left: 10px;
+            bottom: 10px;
+            width: 140px;
+            height: 190px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: knockSway 0.4s infinite alternate ease-in-out;
+            transform-origin: bottom center;
+            z-index: 2;
+        }
+
+        @keyframes knockSway {
+            0% { transform: rotate(-6deg) translateX(0); }
+            100% { transform: rotate(6deg) translateX(12px); }
+        }
+
+        .k-ghost-body {
+            width: 120px;
+            height: 150px;
+            background: radial-gradient(circle at 30% 20%, #f0f0ff, #b6b6d9);
+            border-radius: 50% 50% 40% 40% / 60% 60% 30% 30%;
+            box-shadow: 0 0 30px #b0b0ff, inset -10px -15px 20px #6d6d8b;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding-top: 30px;
+            border: 2px solid #cacaff;
+            position: relative;
+        }
+
+        /* 敲门的手 */
+        .knock-hand {
+            position: absolute;
+            right: -15px;
+            top: 70px;
+            width: 25px;
+            height: 25px;
+            background: #e6e6ff;
+            border-radius: 50%;
+            border: 2px solid #b6b6d9;
+            animation: handKnock 0.4s infinite alternate;
+            box-shadow: 0 0 10px #fff;
+            z-index: 3;
+        }
+
+        @keyframes handKnock {
+            0% { transform: translateX(0) rotate(0deg); }
+            100% { transform: translateX(15px) rotate(15deg); }
+        }
+
+        .k-ghost-tail {
+            width: 90px;
+            height: 35px;
+            background: radial-gradient(ellipse at top, #b6b6d9, #8a8ab0);
+            border-radius: 0 0 70% 70% / 0 0 100% 100%;
+            margin-top: -15px;
+            filter: blur(2px);
+            opacity: 0.9;
+        }
+
+        /* 小幽灵手里提着的袋子/零食 */
+        .snack-bag {
+            position: absolute;
+            left: -15px;
+            bottom: 20px;
+            font-size: 2.5rem;
+            transform: rotate(-15deg);
+            filter: drop-shadow(0 5px 5px black);
+            animation: bagBounce 0.8s infinite alternate;
+        }
+        @keyframes bagBounce {
+            0% { transform: rotate(-15deg) translateY(0); }
+            100% { transform: rotate(-10deg) translateY(-5px); }
+        }
+
+        /* 敲门小幽灵的眼睛 */
+        .k-eyes {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 8px;
+        }
+        .k-eye {
+            width: 25px;
+            height: 25px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 3px black;
+        }
+        .k-pupil {
+            width: 12px;
+            height: 12px;
+            background: #0d0d0d;
+            border-radius: 50%;
+            position: relative;
+            left: 4px;
+        }
+        .k-mouth {
+            width: 30px;
+            height: 15px;
+            background: #2e1a1a;
+            border-radius: 0 0 30px 30px;
+            margin-top: 5px;
+            transform: rotate(-5deg);
+        }
+
+        /* 底部文字 */
+        .footer-mess {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 1.2rem;
+            color: #e8b16b;
+            background: #2b1c0ecc;
+            padding: 12px 20px;
+            border-radius: 100px;
+            border: 2px solid #a35f1b;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            font-style: italic;
+            letter-spacing: 1px;
+            backdrop-filter: blur(3px);
+            transform: rotate(-1deg);
+        }
+
+        /* 响应式 */
+        @media (max-width: 900px) {
+            .scene {
+                flex-direction: column;
+            }
+            .title {
+                font-size: 2.8rem;
+                letter-spacing: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 飘浮背景幽灵 -->
+    <div class="ghost-float">👻</div>
+    <div class="ghost-float ghost-float2">👻</div>
+
+    <div class="messy-card">
+        <h1 class="title">HALLOWEEN GHOST</h1>
+
+        <div class="scene">
+            <!-- 左侧：拿食物的幽灵场景 -->
+            <div class="left-scene">
+                <div class="dizzy-character">
+                    <div class="ghost-body">
+                        <div class="eyes">
+                            <div class="eye"><div class="pupil"></div></div>
+                            <div class="eye"><div class="pupil"></div></div>
+                        </div>
+                        <div class="mouth"></div>
+                        <div class="dizzy-spiral">🌀</div>
+                    </div>
+                    <div class="ghost-tail"></div>
+                </div>
+
+                <div class="beer-container">
+                    <div class="beer-glass">
+                        <div class="beer-foam"></div>
+                    </div>
+                    <div class="beer-bottle"></div>
+                </div>
+
+                <div class="fries-container">
+                    <div class="fries-box"></div>
+                </div>
+
+                <div class="fish-container">
+                    <div class="failed-fish">🐟</div>
+                </div>
+            </div>
+
+            <!-- 右侧：新增的敲门小幽灵场景 -->
+            <div class="knocking-scene">
+                <div class="door">
+                    <div class="door-knob"></div>
+                </div>
+                
+                <div class="knock-effect">knock knock!</div>
+
+                <div class="knocking-ghost">
+                    <div class="k-ghost-body">
+                        <div class="k-eyes">
+                            <div class="k-eye"><div class="k-pupil"></div></div>
+                            <div class="k-eye"><div class="k-pupil"></div></div>
+                        </div>
+                        <div class="k-mouth"></div>
+                        <div class="knock-hand"></div>
+                    </div>
+                    <div class="k-ghost-tail"></div>
+                    <!-- 手里拎着的零食 -->
+                    <div class="snack-bag">🛍️</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-mess">
+            <span>🍺 Beer · 🍟 Fries · 🐟 Fish · 👻 Knock knock!</span>
+        </div>
+    </div>
+</body>
+</html>
